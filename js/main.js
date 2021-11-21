@@ -1,5 +1,5 @@
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75 , window.innerWidth / window.innerHeight, 0.1 , 1000);
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(75 , window.innerWidth / window.innerHeight, 1 , 1000)
 
 renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth,window.innerHeight);
@@ -14,6 +14,8 @@ const start_position = 3;
 const end_position = -start_position;
 const text = document.querySelector(".text")
 const TIMIT_LIMIT = 15
+const startbtn = document.querySelector(".start-btn")
+
 let gameStat = 'loading'
 let isLookingBackward = true
 
@@ -41,6 +43,7 @@ class Doll{
             scene.add(gltf.scene);
             gltf.scene.scale.set(.4 , .4 , .4);
             gltf.scene.position.set(0 , -1.5 , 0); 
+            startbtn.innerText = "START"
             this.doll = gltf.scene;
         })
     }
@@ -53,6 +56,7 @@ class Doll{
         gsap.to(this.doll.rotation , {y: 0 , duration: .45})
         setTimeout(()=> isLookingBackward = false, 450)
     }
+
     async start(){
         this.lookBackward()
         await delay((Math.random() *1000) + 1000)
@@ -69,7 +73,7 @@ function createTrack(){
 }
 createTrack()
 
-
+let doll = new Doll()
 
 class Player{
     constructor(){
@@ -87,20 +91,22 @@ class Player{
         }
     }
     run(){
-        this.playerInfo.velocity = .04
+        this.playerInfo.velocity = .06
     }
 
     stop(){
-        // this.playerInfo.velocity = 0
         gsap.to(this.playerInfo, {velocity : 0 , duration: .1})
     }
     check(){
-        if(this.playerInfo.velocity > 0 && !isLookingBackward){
-            text.innerText("Game Over!")
+        if( !isLookingBackward  && this.playerInfo.velocity > 0){
+            text.innerText = "Game Over!"
+            this.stop()
             gameStat= "Over"
         }
         if(this.playerInfo.positionX < end_position + .4){
-            text.innerText("Congratulations!!")
+            text.innerText = "Congratulations!!"
+            this.stop()
+
             gameStat= "Over"
         }
     }
@@ -112,7 +118,7 @@ class Player{
 }
 
 const player = new Player()
-let doll = new Doll()
+
 
 async function init(){
     await delay(500)
@@ -122,7 +128,7 @@ async function init(){
     await delay(500)
     text.innerText = " Starting in 1 "
     await delay(500)
-    text.innerText = " RUN !!!!"
+    text.innerText = " RUN !!"
     startGame()
 }
 
@@ -136,32 +142,26 @@ function startGame(){
         if(gameStat != "Over"){
             text.innerText = "Ran Out of Time"
             gameStat= "Over"
+            
         }
     }, TIMIT_LIMIT*1000);
 }
+startbtn.addEventListener('click' , () =>{
+    if(startbtn.innerText == "START"){
+        init()
+        document.querySelector('.modal').style.display = "none"
+    }
+})
 
-init()
-
-setTimeout(() => {
-    doll.start()
-}, 1000);
 
 function animate() {
     if(gameStat == "over") return
     renderer.render( scene, camera );
 	requestAnimationFrame( animate );
     player.update();
-    
 }
 animate();
 
-window.addEventListener( 'resize' , onWindowResize , false);
-
-function onWindowResize(){
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectMatrix();
-    renderer.setSize(window.innerWidth,window.innerHeight);
-}
 
 window.addEventListener('keydown' , (e) => {
     if(gameStat != "running") return
@@ -175,3 +175,10 @@ window.addEventListener('keyup' , (e) => {
         player.stop()
     }
 })
+window.addEventListener( 'resize' , onWindowResize , false);
+function onWindowResize(){
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth,window.innerHeight)
+}
+
