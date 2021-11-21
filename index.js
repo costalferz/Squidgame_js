@@ -3,6 +3,10 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 const HOST = '0.0.0.0'
+
+let cors = require('cors')
+
+app.use(cors())
 router.get('/',function(req,res){
   res.sendFile(path.join(__dirname,'public','/html/index.html'));
   //__dirname : It will resolve to your project folder.
