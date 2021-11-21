@@ -2,11 +2,11 @@
   "name": "SquidGame_JS",
   "version": "1.0.0",
   "description": "Red Light , Green Light Game",
-  "main": "app.js",
-
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "DEV" : "nodemon index.js "
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/costalferz/Squidgame_js#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
   }
 }
