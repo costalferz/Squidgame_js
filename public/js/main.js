@@ -32,6 +32,7 @@ function createCube(size , positionX , rotY=0 , color = 0xfbc851){
 
 camera.position.z = 5;
 const loader = new THREE.GLTFLoader();
+
 function delay(ms){
     return new Promise(resolve => setTimeout(resolve,ms));
 }
