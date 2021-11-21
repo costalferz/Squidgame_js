@@ -7,10 +7,10 @@ const port = process.env.port || 3000;
 let cors = require('cors')
 
 app.use(cors())
-router.get('/',function(req,res){
-  res.sendFile(path.join(__dirname,'public','/html/index.html'));
-  //__dirname : It will resolve to your project folder.
-});
+// router.get('/',function(req,res){
+//   res.sendFile(path.join(__dirname,'public','/html/index.html'));
+//   //__dirname : It will resolve to your project folder.
+// });
 
 router.get("/test", (req,res) => {
   res.json("Hello AEIOU")
