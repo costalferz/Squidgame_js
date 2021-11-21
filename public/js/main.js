@@ -155,7 +155,7 @@ startbtn.addEventListener('click' , () =>{
 })
 
 
-function animate() {
+const animate = () => {
     if(gameStat == "over") return
     renderer.render( scene, camera );
 	requestAnimationFrame( animate );
