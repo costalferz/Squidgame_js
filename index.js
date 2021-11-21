@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const router = express.Router();
-const HOST = '0.0.0.0'
-
+const HOST = '0.0.0.0';
+const port = process.env.port || 3000;
 let cors = require('cors')
 
 app.use(cors())
@@ -14,7 +14,7 @@ router.get('/',function(req,res){
 
 //add the router
 app.use('/', router);
-app.listen(process.env.port || 5000);
+app.listen(process.env.port || 3000);
 app.use(express.static(path.join(__dirname, 'public')));
 
-console.log('Running at Port 5000');
+console.log('Running at Port 3000');
